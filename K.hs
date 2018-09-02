@@ -14,6 +14,8 @@ import InfoStates
 
 newtype PContT m r f g a = PContT { runPContT :: (a -> m g r) -> m f r }
 
+type K e f a = PContT D InfoState e f a
+
 instance Effect m => PMonad (PContT m r) where
   return :: a -> PContT m r f f a
   return a = PContT $ \k -> k a
@@ -35,11 +37,6 @@ joinK m = m >>=> id
 
 instance Effect m => Functor (PContT m r e f) where
   fmap f m = PContT $ \k -> runPContT m (k . f)
-
-(<*>) :: Effect m => PContT m r f e (a -> b) -> PContT m r e g a -> PContT m r f g b
-u <*> v = u >>=> \f -> v >>=> \x -> PContT $ \k -> k $ f x
-
-type K e f a = PContT D InfoState e f a
 
 monadicLift :: SeqSplit e f (MonoidPlus e f) => D e a -> K (MonoidPlus e f) f a
 monadicLift m = PContT $ \k -> m >>>= k
