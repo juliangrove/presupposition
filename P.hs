@@ -80,11 +80,11 @@ insert ZeroW a e = a :+ e
 insert (SuccW n) a (b :+ e) = b :+ insert n a e
 
 -- | A function to implement anaphora resolution.
-anaph :: NatWitness n
-         -> a
-         -> P (Insert a e (NatWitness n)) b
-         -> P e b
-anaph i a t = P $ \s -> runP t $ insert i a s
+preAnaph :: NatWitness n
+            -> a
+            -> P (Insert a e (NatWitness n)) b
+            -> P e b
+preAnaph i a m = P $ \s -> runP m $ insert i a s
 
 -- | We include a class with a method 'seqSplit' for splitting sequences in a
 -- way that depends on the desired type of the result. This trick echoes the

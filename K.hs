@@ -50,9 +50,10 @@ monadicLower m = runPContT m upD
 newRegister :: InfoState
 newRegister l = Setof [ l ++ [x] | x <- entities ]
 
-a :: (SeqSplit e () (MonoidPlus e ())) =>
+a :: (SeqSplit () (MonoidPlus e ()) (MonoidPlus e ()),
+      SeqSplit e () (MonoidPlus e ())) =>
      LiftedOnePlacePred -> K (MonoidPlus e ()) e LiftedEntity
 a p = PContT $ \k ->
         D $ \i ->
-              runD (newRegister >+ (p $ \l -> l !! i) >@
+              runD (upD (newRegister >+ (p $ \l -> l !! i)) >@
               (k $ \l -> l !! i)) (succ i) 

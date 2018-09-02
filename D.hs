@@ -43,6 +43,12 @@ downD u v = u >>>= \f -> v >>>= \x -> upD $ f x
 joinD :: SeqSplit e f (MonoidPlus e f) => D e (D f b) -> D (MonoidPlus e f) b
 joinD m = m >>>= id
 
+anaph :: NatWitness n
+         -> a
+         -> D (Insert a e (NatWitness n)) b
+         -> D e b
+anaph i a m = D $ \j c -> preAnaph i a $ runD m j c
+
 type LiftedEntity = [Entity] -> Entity
 type LiftedOnePlacePred = LiftedEntity -> InfoState
 type LiftedTwoPlacePred = LiftedEntity -> LiftedEntity -> InfoState
@@ -56,9 +62,12 @@ liftOnePlacePred p = \x l -> Setof [ l | p $ x l ]
 liftTwoPlacePred :: TwoPlacePred -> LiftedTwoPlacePred
 liftTwoPlacePred p = \x y l -> Setof [ l | p (x l) (y l) ]
 
-(>@) :: (SeqSplit e () (MonoidPlus e ())) =>
-        InfoState -> D e InfoState -> D (MonoidPlus e ()) InfoState
-p >@ phi = D $ \i c -> runD phi i (c . (p =>>)) >>=
+(>@) :: (SeqSplit e (MonoidPlus f ()) (MonoidPlus e (MonoidPlus f ())),
+         SeqSplit f () (MonoidPlus f ())) =>
+        D e InfoState
+     -> D f InfoState
+     -> D (MonoidPlus e (MonoidPlus f ())) InfoState
+phi >@ psi = phi >>= \p -> D $ \i c -> runD psi i (c . (p =>>)) >>=
                        \(q, j) -> return (p >+ q, j)
 
 reset :: D e a -> D e a
