@@ -1,13 +1,4 @@
 {-# LANGUAGE
-    TypeFamilies,
-    GADTs,
-    DataKinds,
-    EmptyDataDecls,
-    MultiParamTypeClasses,
-    AllowAmbiguousTypes,
-    FlexibleInstances,
-    FlexibleContexts,
-    UndecidableInstances,
     MonadComprehensions #-}
 
 module InfoStates where

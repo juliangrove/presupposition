@@ -5,7 +5,6 @@
     MultiParamTypeClasses,
     FlexibleInstances,
     FlexibleContexts,
-    AllowAmbiguousTypes,
     UndecidableInstances #-}
 
 module P where
@@ -130,16 +129,16 @@ instance Effect P where
   m >>= k = P $ \xy -> let (x, y) = seqSplit xy
                           in runP m x >>>>= \z -> runP (k z) y
                                                     
--- | We define a 'join' operation for graded monads in terms of bind and the
--- identity function.
-join :: (Effect m, Inv m f g) => m f (m g b) -> m (Plus m f g) b
-join m = m >>= id
+upP :: a -> P () a
+upP = return
 
--- | We can define a "sequential application", borrowing the symbol for
--- applicative functors.
-(<*>) :: (Effect m, Inv m p1 (Plus m p2 (Unit m)), Inv m p2 (Unit m))
-      =>   m p1 (a -> b) -> m p2 a -> m (Plus m p1 (Plus m p2 (Unit m))) b
-fun <*> arg = fun >>= \f -> arg >>= \a -> return $ f a
+downP :: (SeqSplit e (MonoidPlus f ()) (MonoidPlus e (MonoidPlus f ())),
+          SeqSplit f () (MonoidPlus f ())) =>
+         P e (a -> b) -> P f a -> P (MonoidPlus e (MonoidPlus f ())) b
+downP u v = u >>= \f -> v >>= \x -> return $ f x
+
+joinP :: SeqSplit f g (MonoidPlus f g) => P f (P g b) -> P (MonoidPlus f g) b
+joinP m = m >>= id
 
 (||-) :: Bool -> a -> Maybe a
 True ||- a = Just a

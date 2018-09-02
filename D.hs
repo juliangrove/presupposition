@@ -1,16 +1,8 @@
 {-# LANGUAGE
     TypeFamilies,
-    GADTs,
-    DataKinds,
-    MultiParamTypeClasses,
-    FlexibleInstances,
     FlexibleContexts,
-    AllowAmbiguousTypes,
-    RankNTypes,
-    ExplicitForAll,
     UndecidableInstances,
-    InstanceSigs,
-    TemplateHaskell #-}
+    InstanceSigs #-}
 
 module D where
 
@@ -31,17 +23,25 @@ instance Effect D where
   return :: a -> D () a
   return a = D $ \i c -> P $ \s -> True ||- (a, i)
 
-  m >>= f = D $ \i c -> join $ fmap (\p -> let (a, j) = p
-                                                 in runD (f a) j c)
-                                    $ runD m i c
+  m >>= f = D $ \i c -> joinP $ fmap (\p -> let (a, j) = p
+                                            in runD (f a) j c)
+                                     $ runD m i c
 instance Functor (D e) where
   fmap f m = D $ \i c -> fmap (\(a, j) -> (f a, j)) $ runD m i c
 
 (>>>=) :: SeqSplit e f (MonoidPlus e f) => D e a -> (a -> D f b) -> D (Plus D e f) b
 (>>>=) = (>>=)
 
-returnDyn :: a -> D () a
-returnDyn = return
+upD :: a -> D () a
+upD = return
+
+downD :: (SeqSplit e (MonoidPlus f ()) (MonoidPlus e (MonoidPlus f ())),
+          SeqSplit f () (MonoidPlus f ())) =>
+         D e (a -> b) -> D f a -> D (MonoidPlus e (MonoidPlus f ())) b
+downD u v = u >>>= \f -> v >>>= \x -> upD $ f x
+
+joinD :: SeqSplit e f (MonoidPlus e f) => D e (D f b) -> D (MonoidPlus e f) b
+joinD m = m >>>= id
 
 type LiftedEntity = [Entity] -> Entity
 type LiftedOnePlacePred = LiftedEntity -> InfoState

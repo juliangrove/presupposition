@@ -45,3 +45,9 @@ help = curry (`elem` [(W, W), (V, V), (S, B), (DD, M)])
 defeat = curry (`elem` [(x, y) | x <- entities,
                                  y <- entities,
                                  dog x && human y])
+
+fa :: (a -> b) -> a -> b
+fa f a = f a
+
+ba :: a -> (a -> b) -> b
+ba a f = f a
