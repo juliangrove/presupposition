@@ -5,7 +5,7 @@ presupposition satisfaction'; in particular, chapters 2 and 3. These are:
 P.hs: implements a static framework for presupposition, in which all
 presuppositions project. Terms with presuppositions inhabit types `P e a`, where
 `e` is an effect encoding the types of any anaphoric dependencies, and `a` is
-the type of the value. This module provides an implementatoin of chapter 2.
+the type of the value. This module provides an implementation of chapter 2.
 
 D.hs: implements a dynamic framework for presupposition, in which
 presuppositions may be filtered and cancelled. Terms with presuppositions
