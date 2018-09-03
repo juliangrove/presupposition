@@ -1,6 +1,6 @@
 A collection of modules implementing various aspects of the framework for
-presupposition based on graded monads from the dissertation 'Scope-taking and
-presupposition satisfaction'; in particular, chapters 2 and 3. These are:
+presupposition based on graded monads from the dissertation *Scope-taking and
+presupposition satisfaction*; in particular, chapters 2 and 3. These are:
 
 P.hs: implements a static framework for presupposition, in which all
 presuppositions project. Terms with presuppositions inhabit types `P e a`, where
@@ -17,6 +17,6 @@ cancellation, but with added functionality to analyze the semantic contribution
 of indefinites. Terms with presuppositions now inhabit types `K e e a`. This
 module provides an implementation of chapter 3 (the second part).
 
-`P` and `D` are made instances of the Effect class of Orchard, Petricek, and
-Mycroft for graded monads. `K` is made an instance of their PMonad class for
+`P` and `D` are made instances of the *Effect* class of Orchard, Petricek, and
+Mycroft for graded monads. `K` is made an instance of their *PMonad* class for
 parameterized monads.
