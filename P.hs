@@ -39,9 +39,11 @@ instance Show a => HelpShowSeq (Seq (a, ())) where
 instance (Show a, HelpShowSeq (Seq (b, p))) => HelpShowSeq (Seq (a, (b, p))) where
   helpShowSeq (a :+ s) = show a ++ " | " ++ helpShowSeq s
 
+-- | We define a function for extracting the 'head' of a sequence.
 head :: Seq (a, p) -> a
 head (a :+ s) = a
 
+-- | We define a function for extracting the 'tail' of a sequence.
 tail :: Seq (a, p) -> Seq p
 tail (a :+ s) = s
 

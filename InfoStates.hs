@@ -44,13 +44,16 @@ instance (Show a, Eq a) => Show (Set a) where
 instance Foldable Set where
   foldr f a s = foldr f a $ getList s
 
+-- | 'Set' is a 'Functor'.
 instance Functor Set where
   fmap f s = Setof $ map f $ getList s
 
+-- | 'Set' is 'Applicative'.
 instance Applicative Set where
   pure a = Setof [a]
   u <*> v = Setof $ getList u <*> getList v
 
+-- | 'Set' is a 'Monad'.
 instance Monad Set where
   return = pure
   m >>= f = Setof $ getList m >>= \x -> getList $ f x
@@ -67,9 +70,13 @@ type InfoState = [Entity] -> Set [Entity]
 -- assignments (i.e., lists of 'entities') to 'entities'.
 type LiftedEntity = [Entity] -> Entity
 
+-- | We define the information state 'true', which returns the singleton set of
+-- any partial assignment (i.e., list of 'entities') it is fed.
 true :: InfoState
 true a = Setof [a]
 
+-- | We define a predicate on information states which checks whether or not
+-- they are 'true' (by running them on the empty partial assignment).
 isTrue :: InfoState -> Bool
 isTrue iState = iState [] == true []
 
