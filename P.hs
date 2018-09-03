@@ -72,23 +72,23 @@ data NatWitness n where
 newtype P e a = P { runP :: Seq e -> Maybe a }
 
 -- | The type-level function to help type the function 'anaph'.
-type family Insert a e i where
-  Insert a p (NatWitness Zero) = (a, p)
-  Insert a (b, p) (NatWitness (Succ n)) = (b, Insert a p (NatWitness n))
+type family Insert i a e where
+  Insert (NatWitness Zero) a p = (a, p)
+  Insert (NatWitness (Succ n)) a (b, p) = (b, Insert (NatWitness n) a p)
 
 -- | A function for inserting terms into sequences, used in the definition of
 -- 'anaph'.
 insert :: NatWitness n
           -> a
           -> Seq e
-          -> Seq (Insert a e (NatWitness n))
+          -> Seq (Insert (NatWitness n) a e)
 insert ZeroW a e = a :+ e
 insert (SuccW n) a (b :+ e) = b :+ insert n a e
 
 -- | A function to implement anaphora resolution for the graded monad 'P'.
 preAnaph :: NatWitness n
             -> a
-            -> P (Insert a e (NatWitness n)) b
+            -> P (Insert (NatWitness n) a e) b
             -> P e b
 preAnaph i a m = P $ \s -> runP m $ insert i a s
 
