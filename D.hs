@@ -43,8 +43,8 @@ instance Effect D where
 instance Functor (D e) where
   fmap f m = D $ \i c -> fmap (\(a, j) -> (f a, j)) $ runD m i c
 
--- | We define a makeshift bind so as to provide a non-conflicting identifier
--- for use in other modules.
+-- | We define a makeshift graded bind so as to provide a non-conflicting
+-- identifier for use outside the current module.
 (>>>=) :: SeqSplit e f (MonoidPlus e f) => D e a -> (a -> D f b) -> D (Plus D e f) b
 (>>>=) = (>>=)
 
