@@ -35,6 +35,8 @@ instance Effect D where
   return :: a -> D () a
   return a = D $ \i c -> return (a, i)
 
+  (>>=) ::SeqSplit e f (MonoidPlus e f) =>
+          D e a -> (a -> D f b) -> D (MonoidPlus e f) b
   m >>= f = D $ \i c -> runD m i c >>= \(v, j) -> runD (f v) j c
 
 -- | For any given effect, 'D' constitutes a 'Functor'.
