@@ -46,8 +46,10 @@ defeat = curry (`elem` [(x, y) | x <- entities,
                                  y <- entities,
                                  dog x && human y])
 
+-- | Forward application.
 fa :: (a -> b) -> a -> b
 fa f a = f a
 
+-- | Backward application.
 ba :: a -> (a -> b) -> b
 ba a f = f a
