@@ -16,11 +16,10 @@ module K where
 import Prelude hiding (Monad(..), (<*>), head, tail)
 import Control.Effect
 import Control.Effect.Parameterised
-import D
-import P
-import InfoStates
 import Model
-
+import InfoStates
+import P
+import D
 
 newtype PContT m r f g a = PContT { runPContT :: (a -> m g r) -> m f r }
 

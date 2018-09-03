@@ -14,9 +14,9 @@ module D where
 
 import Prelude hiding (Monad(..), (<*>), head, tail)
 import Control.Effect
-import P
-import InfoStates
 import Model
+import InfoStates
+import P
 
 newtype D e a = D { runD :: Int -> (InfoState -> InfoState) -> P e (a, Int) }
 
