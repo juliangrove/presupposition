@@ -7,10 +7,10 @@
 module D where
 
 -- $intro
--- This module defines, from 'P', a datatype 'D' for representing presupposition
--- and defines from it an instance of the 'Effect' class of Orchard, Petricek,
--- and Mycroft. The result is an implementation of the framework for
--- presupposition of chapter 3 of Grove 2019.
+-- This module defines, from 'P', a datatype constructor 'D' for representing
+-- presupposition and defines from it an instance of the 'Effect' class of
+-- Orchard, Petricek, and Mycroft. The result is an implementation of the
+-- framework for presupposition of chapter 3 of Grove 2019.
 
 import Prelude hiding (Monad(..), (<*>), head, tail)
 import Control.Effect
