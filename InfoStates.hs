@@ -104,4 +104,4 @@ instance LiftStuff OnePlacePred where
   lift p = \x l -> Setof [ l | p $ x l ]
 
 instance LiftStuff TwoPlacePred where
- lift p = \x y l -> Setof [ l | p (x l) (y l) ]
+  lift p = \x y l -> Setof [ l | p (x l) (y l) ]
