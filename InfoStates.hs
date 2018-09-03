@@ -10,8 +10,8 @@ import Model
 
 -- $intro
 -- This module defines a type for information states, along with various
--- operations on them, including update ('(>+)') and dynamic implication
--- ('(=>>)').
+-- operations on them, including update ('>+') and dynamic implication
+-- ('=>>').
 
 -- | We define a type of sets so that we may construct sets of partial
 -- assignments (i.e., lists of 'entities').
