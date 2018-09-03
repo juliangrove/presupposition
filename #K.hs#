@@ -19,7 +19,7 @@ import D
 -- Petricek, and Mycroft. Although 'K' constitutes a parameterized monad in the
 -- implementation, these give rise to graded monads (in real life). The result
 -- is thus a faithful implementation of the framework for presupposition of
--- chapter 3 of Grove 2019.
+--
 
 -- | We define a datatype constructor 'PContT' for transforming a graded monad
 -- into its continuized variant as a parameterized monad.

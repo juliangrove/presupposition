@@ -67,7 +67,7 @@ joinD m = m >>= id
 -- undergoing anaphora.
 anaph :: NatWitness n
          -> a
-         -> D (Insert a e (NatWitness n)) b
+         -> D (Insert (NatWitness n) a e) b
          -> D e b
 anaph i a m = D $ \j c -> preAnaph i a $ runD m j c
 
