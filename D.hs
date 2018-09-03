@@ -6,11 +6,17 @@
 
 module D where
 
+-- $intro
+-- This module defines, from 'P', a datatype 'D' for representing presupposition
+-- and defines from it an instance of the 'Effect' class of Orchard, Petricek,
+-- and Mycroft. The result is an implementation of the framework for
+-- presupposition of chapter 3 of Grove 2019.
+
 import Prelude hiding (Monad(..), (<*>), head, tail)
 import Control.Effect
 import P
-import Model
 import InfoStates
+import Model
 
 newtype D e a = D { runD :: Int -> (InfoState -> InfoState) -> P e (a, Int) }
 
@@ -49,18 +55,8 @@ anaph :: NatWitness n
          -> D e b
 anaph i a m = D $ \j c -> preAnaph i a $ runD m j c
 
-type LiftedEntity = [Entity] -> Entity
-type LiftedOnePlacePred = LiftedEntity -> InfoState
-type LiftedTwoPlacePred = LiftedEntity -> LiftedEntity -> InfoState
-
-the :: LiftedOnePlacePred -> D (LiftedEntity, ()) LiftedEntity
+the :: Lift OnePlacePred -> D (Lift Entity, ()) (Lift Entity)
 the = \p -> D $ \i c -> P $ \s -> isTrue (c $ p $ head s) ||- (head s, i)
-
-liftOnePlacePred :: OnePlacePred -> LiftedOnePlacePred
-liftOnePlacePred p = \x l -> Setof [ l | p $ x l ]
-
-liftTwoPlacePred :: TwoPlacePred -> LiftedTwoPlacePred
-liftTwoPlacePred p = \x y l -> Setof [ l | p (x l) (y l) ]
 
 (>@) :: (SeqSplit e (MonoidPlus f ()) (MonoidPlus e (MonoidPlus f ())),
          SeqSplit f () (MonoidPlus f ())) =>

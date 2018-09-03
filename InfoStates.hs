@@ -1,5 +1,8 @@
 {-# LANGUAGE
-    MonadComprehensions #-}
+    MonadComprehensions,
+    TypeFamilies,
+    TypeSynonymInstances,
+    FlexibleInstances #-}
 
 module InfoStates where
 
@@ -60,6 +63,10 @@ isEmpty s = s == Setof []
 -- partial assignments (i.e., lists of 'entities') and return sets of such.
 type InfoState = [Entity] -> Set [Entity]
 
+-- | We define the type 'LiftedEntity', inhabited by functions from partial
+-- assignments (i.e., lists of 'entities') to 'entities'.
+type LiftedEntity = [Entity] -> Entity
+
 true :: InfoState
 true a = Setof [a]
 
@@ -73,3 +80,21 @@ p >+ q = \s -> [ u | t <- p s, u <- q t ]
 -- | Dynamic implication.
 (=>>) :: InfoState -> InfoState -> InfoState
 p =>> q = \s -> Setof [ s | and $ fmap (\l -> not $ isEmpty $ q l) $ p s ]
+
+-- | We define a type family 'Lift' for lifting arbitrary types into their
+-- information state variants.
+type family Lift a where
+  Lift Bool = InfoState
+  Lift Entity = LiftedEntity
+  Lift (a -> b) = Lift a -> Lift b
+
+-- | We define a class with a single method 'lift' for lifting predicates into
+-- their information state variants.
+class LiftStuff a where
+  lift :: a -> Lift a
+
+instance LiftStuff OnePlacePred where
+  lift p = \x l -> Setof [ l | p $ x l ]
+
+instance LiftStuff TwoPlacePred where
+ lift p = \x y l -> Setof [ l | p (x l) (y l) ]

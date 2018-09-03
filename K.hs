@@ -4,13 +4,23 @@
 
 module K where
 
+-- $intro
+-- This module defines, from 'D', a datatype 'K' for representing presupposition
+-- in a continuized format so that one can analyze the semantic contribution of
+-- indefinites. We defines from 'K' an instance of the 'PMonad' class of
+-- Orchard, Petricek, and Mycroft. Although 'K' constitutes a parameterized
+-- monad in the implementation, these give rise to graded monads (in real life).
+-- The result is thus a faithful implementation of the framework for
+-- presupposition of chapter 3 of Grove 2019.
+
 import Prelude hiding (Monad(..), (<*>), head, tail)
 import Control.Effect
 import Control.Effect.Parameterised
-import P
 import D
-import Model
+import P
 import InfoStates
+import Model
+
 
 newtype PContT m r f g a = PContT { runPContT :: (a -> m g r) -> m f r }
 
@@ -49,8 +59,8 @@ newRegister l = Setof [ l ++ [x] | x <- entities ]
 
 a :: (SeqSplit () (MonoidPlus e ()) (MonoidPlus e ()),
       SeqSplit e () (MonoidPlus e ())) =>
-     LiftedOnePlacePred -> K (MonoidPlus e ()) e LiftedEntity
+     Lift OnePlacePred -> K (MonoidPlus e ()) e (Lift Entity)
 a p = PContT $ \k ->
         D $ \i ->
               runD (upD (newRegister >+ (p $ \l -> l !! i)) >@
-              (k $ \l -> l !! i)) (succ i) 
+              (k $ \l -> l !! i)) (succ i)

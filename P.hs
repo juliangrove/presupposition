@@ -17,7 +17,7 @@ import Model
 -- This module defines a datatype 'P' for representing presupposition and
 -- defines from it an instance of the 'Effect' class of Orchard, Petricek, and
 -- Mycroft. The result is an implementation of the framework for presupposition
--- of Grove 2019.
+-- of chapter 2 of Grove 2019.
 
 -- | We introduce a datatype for heterogeneous sequences. The types of such
 -- sequences are the types of the effects. This datatype comes with functions
