@@ -1,7 +1,6 @@
 {-# LANGUAGE
     FlexibleContexts,
-    InstanceSigs,
-    TypeSynonymInstances #-}
+    InstanceSigs #-}
 
 module K where
 
