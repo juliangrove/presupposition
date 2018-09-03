@@ -33,7 +33,7 @@ instance Effect D where
   type Plus D p1 p2 = Plus P p1 p2
 
   return :: a -> D () a
-  return a = D $ \i c -> P $ \s -> True ||- (a, i)
+  return a = D $ \i c -> return (a, i)
 
   m >>= f = D $ \i c -> joinP $ fmap (\p -> let (a, j) = p
                                             in runD (f a) j c)
