@@ -1,6 +1,7 @@
 {-# LANGUAGE
     FlexibleContexts,
-    InstanceSigs #-}
+    InstanceSigs,
+    TypeSynonymInstances #-}
 
 module K where
 
@@ -32,7 +33,7 @@ instance Effect m => PMonad (PContT m r) where
   (>>=) :: PContT m r f e a -> (a -> PContT m r e g b) -> PContT m r f g b
   m >>= f = PContT $ \k -> runPContT m $ \x -> runPContT (f x) k
 
-(>>=>) :: PContT m r f e a -> (a -> PContT m r e g b) -> PContT m r f g b
+(>>=>) :: Effect m => PContT m r f e a -> (a -> PContT m r e g b) -> PContT m r f g b
 m >>=> f = PContT $ \k -> runPContT m $ \x -> runPContT (f x) k
 
 upK :: a -> K e e a
