@@ -26,6 +26,7 @@ data Seq p where
   Nil :: Seq ()
   (:+) :: a -> Seq p -> Seq (a, p)
 
+-- | Sequences can be shown.
 instance HelpShowSeq (Seq p) => Show (Seq p) where
   show s = "{" ++ helpShowSeq s
 
@@ -44,10 +45,13 @@ head (a :+ s) = a
 tail :: Seq (a, p) -> Seq p
 tail (a :+ s) = s
 
+-- | A type family corresponding to a monoid whose addition operation is
+-- 'MonoidPlus' and whose unit is '()'.
 type family MonoidPlus a b where
   MonoidPlus () a = a
   MonoidPlus (a, p) b = (a, MonoidPlus p b)
-
+  
+-- | Concatentation for sequences.
 (+:+) :: Seq a -> Seq b -> Seq (MonoidPlus a b)
 Nil +:+ s = s
 (a :+ s1) +:+ s2 = (a :+ (s1 +:+ s2))
@@ -56,7 +60,7 @@ Nil +:+ s = s
 data Nat = Zero | Succ Nat deriving Show
 
 -- | Witnesses to the type level Naturals provide parameters for the function
--- 'anaph'.
+-- 'preAnaph'.
 data NatWitness n where
   ZeroW :: NatWitness Zero
   SuccW :: NatWitness n -> NatWitness (Succ n)
@@ -79,7 +83,7 @@ insert :: NatWitness n
 insert ZeroW a e = a :+ e
 insert (SuccW n) a (b :+ e) = b :+ insert n a e
 
--- | A function to implement anaphora resolution.
+-- | A function to implement anaphora resolution for the graded monad 'P'.
 preAnaph :: NatWitness n
             -> a
             -> P (Insert a e (NatWitness n)) b
@@ -128,21 +132,26 @@ instance Effect P where
   return a = P $ \x -> Just a
   m >>= k = P $ \xy -> let (x, y) = seqSplit xy
                           in runP m x >>>>= \z -> runP (k z) y
-                                                    
+
+-- | The graded monad operator 'upP' is just 'return'.
 upP :: a -> P () a
 upP = return
 
+-- | The graded monad operator 'downP' is just sequential application.
 downP :: (SeqSplit e (MonoidPlus f ()) (MonoidPlus e (MonoidPlus f ())),
           SeqSplit f () (MonoidPlus f ())) =>
          P e (a -> b) -> P f a -> P (MonoidPlus e (MonoidPlus f ())) b
 downP u v = u >>= \f -> v >>= \x -> return $ f x
 
+-- | The graded monad operator 'joinP' is just join.
 joinP :: SeqSplit f g (MonoidPlus f g) => P f (P g b) -> P (MonoidPlus f g) b
 joinP m = m >>= id
 
+-- | The turnstile.
 (||-) :: Bool -> a -> Maybe a
 True ||- a = Just a
 False ||- a = Nothing
 
+-- | Let's define a static meaning for _the_.
 theSta :: OnePlacePred -> P (Entity, ()) Entity
 theSta = \p -> P $ \s -> p (head s) ||- (head s)
