@@ -35,10 +35,8 @@ instance Effect D where
   return :: a -> D () a
   return a = D $ \i c -> return (a, i)
 
-  m >>= f = D $ \i c -> joinP $ fmap (\p -> let (a, j) = p
-                                            in runD (f a) j c)
-                                     $ runD m i c
-                        
+  m >>= f = D $ \i c -> runD m i c >>= \(v, j) -> runD (f v) j c
+
 -- | For any given effect, 'D' constitutes a 'Functor'.
 instance Functor (D e) where
   fmap f m = D $ \i c -> fmap (\(a, j) -> (f a, j)) $ runD m i c
