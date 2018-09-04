@@ -79,5 +79,5 @@ a :: (SeqSplit () (MonoidPlus e ()) (MonoidPlus e ()),
      Lift OnePlacePred -> K (MonoidPlus e ()) e (Lift Entity)
 a p = PContT $ \k ->
         D $ \i ->
-              runD (upD (newRegister >+ (p $ \l -> l !! i)) >@
-              (k $ \l -> l !! i)) (succ i)
+          runD (upD (newRegister >+ (p $ \l -> l !! i)) >@
+          (k $ \l -> l !! i)) (succ i)
