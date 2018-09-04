@@ -14,7 +14,7 @@ first part).
 
 K.hs: continuizes `D` to provide a framework with presupposition filtering and
 cancellation, but with added functionality to analyze the semantic contribution
-of indefinites. Terms with presuppositions now inhabit types `K e e a`. This
+of indefinites. Terms with presuppositions now inhabit types `K e f a`. This
 module provides an implementation of chapter 3 (the second part).
 
 `P` and `D` are made instances of the *Effect* class of Orchard, Petricek, and
