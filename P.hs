@@ -5,7 +5,8 @@
     MultiParamTypeClasses,
     FlexibleInstances,
     FlexibleContexts,
-    UndecidableInstances #-}
+    UndecidableInstances,
+    InstanceSigs #-}
 
 module P where
 
@@ -131,7 +132,11 @@ instance Effect P where
   type Unit P = ()
   type Plus P p1 p2 = MonoidPlus p1 p2
 
-  return a = P $ \x -> Just a
+  return :: a -> P () a
+  return a = P $ \s -> Just a
+
+  (>>=) :: SeqSplit e f (MonoidPlus e f) =>
+           P e a -> (a -> P f b) -> P (MonoidPlus e f) b
   m >>= k = P $ \xy -> let (x, y) = seqSplit xy
                           in runP m x >>>>= \z -> runP (k z) y
 
