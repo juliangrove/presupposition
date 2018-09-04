@@ -138,7 +138,7 @@ instance Effect P where
   (>>=) :: SeqSplit e f (MonoidPlus e f) =>
            P e a -> (a -> P f b) -> P (MonoidPlus e f) b
   m >>= k = P $ \xy -> let (x, y) = seqSplit xy
-                          in runP m x >>>>= \z -> runP (k z) y
+                       in runP m x >>>>= \z -> runP (k z) y
 
 -- | The graded monad operator 'upP' is just 'return'.
 upP :: a -> P () a
