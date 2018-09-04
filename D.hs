@@ -1,7 +1,6 @@
 {-# LANGUAGE
     TypeFamilies,
     FlexibleContexts,
-    UndecidableInstances,
     InstanceSigs #-}
 
 module D where
@@ -27,10 +26,10 @@ newtype D e a = D { runD :: Int -> (InfoState -> InfoState) -> P e (a, Int) }
 -- | We make 'D' an instance of the 'Effect' class of Orchard, Petricek, and
 -- Mycroft. Indeed, the effects are the same as those of 'P'.
 instance Effect D where
-  type Inv D p1 p2 = Inv P p1 p2
+  type Inv D p1 p2 = SeqSplit p1 p2 (MonoidPlus p1 p2)
 
-  type Unit D = Unit P
-  type Plus D p1 p2 = Plus P p1 p2
+  type Unit D = ()
+  type Plus D p1 p2 = MonoidPlus p1 p2
 
   return :: a -> D () a
   return a = D $ \i c -> return (a, i)
