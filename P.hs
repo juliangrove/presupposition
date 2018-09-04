@@ -111,7 +111,7 @@ instance SeqSplit (a, p) () (a, p) where
 
 instance SeqSplit p1 (b, p2) p3 => SeqSplit (a, p1) (b, p2) (a, p3) where
   seqSplit (a :+ s) = let (s1, s2) = seqSplit s
-                   in (a :+ s1, s2)
+                      in (a :+ s1, s2)
 
 -- | We make 'P' an instance of the 'Functor' class.
 instance Functor (P e) where
