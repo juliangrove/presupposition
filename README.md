@@ -20,3 +20,25 @@ module provides an implementation of chapter 3 (the second part).
 `P` and `D` are made instances of the *Effect* class of Orchard, Petricek, and
 Mycroft for graded monads. `K` is made an instance of their *PMonad* class for
 parameterized monads.
+
+Example. Load up K.hs and do:
+
+  `sentence1 = monadicLower $ (an // dyn octopus) \\ (downK ((downK (upK (dyn ate))) // (a // dyn cannoli)))`
+
+  `sentence2 = (the // dyn mollusk) \\ (downD (upD (dyn (was thirsty))))`
+
+  `sentence2resolved = anaph ZeroW (\g -> g !! 1) sentence2`
+
+  `sentence3 = (the // dyn dessert) \\ (downD (upD ((dyn (was stale)))))`
+
+  `sentence3resolved = anaph ZeroW (\g -> g !! 0) sentence`
+
+  `discourse1 = sentence1 >@ sentence2resolved`
+
+  `discourse2 = discourse1 >@ sentence3resolved`
+
+  `checkForTruth sentence1`
+
+  `checkForTruth discourse1`
+
+  `checkForTruth discourse2`
