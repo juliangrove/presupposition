@@ -31,7 +31,7 @@ Second sentence: "The mollusk was thirsty."
 
   `sentence2 = (the // dyn mollusk) \\ (downD (upD (dyn (was thirsty))))`
 
-Make 'the mollusk' anaphoric to 'an octopus'.
+Make 'the mollusk' anaphoric to 'an octopus':
 
   `sentence2resolved = anaph ZeroW (\g -> g !! 1) sentence2`
 
@@ -39,7 +39,7 @@ Third sentence: "The dessert was stale."
 
   `sentence3 = (the // dyn dessert) \\ (downD (upD ((dyn (was stale)))))`
 
-Make 'the dessert' anaphoric to 'a cannoli'.
+Make 'the dessert' anaphoric to 'a cannoli':
 
   `sentence3resolved = anaph ZeroW (\g -> g !! 0) sentence`
 
