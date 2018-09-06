@@ -80,17 +80,17 @@ type family Insert i a e where
 -- | A function for inserting terms into sequences, used in the definition of
 -- 'anaph'.
 insert :: NatWitness n
-          -> a
-          -> Seq e
-          -> Seq (Insert (NatWitness n) a e)
+       -> a
+       -> Seq e
+       -> Seq (Insert (NatWitness n) a e)
 insert ZeroW a e = a :+ e
 insert (SuccW n) a (b :+ e) = b :+ insert n a e
 
 -- | A function to implement anaphora resolution for the graded monad 'P'.
 preAnaph :: NatWitness n
-            -> a
-            -> P (Insert (NatWitness n) a e) b
-            -> P e b
+         -> a
+         -> P (Insert (NatWitness n) a e) b
+         -> P e b
 preAnaph i a m = P $ \s -> runP m $ insert i a s
 
 -- | We include a class with a method 'seqSplit' for splitting sequences in a

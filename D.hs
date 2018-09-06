@@ -65,9 +65,9 @@ joinD m = m >>= id
 -- position to plug, a term with which to plug it, and the effectual meaning
 -- undergoing anaphora.
 anaph :: NatWitness n
-         -> a
-         -> D (Insert (NatWitness n) a e) b
-         -> D e b
+      -> a
+      -> D (Insert (NatWitness n) a e) b
+      -> D e b
 anaph i a m = D $ \j c -> preAnaph i a $ runD m j c
 
 -- | Let's define a dynamic meaning for _the_.
