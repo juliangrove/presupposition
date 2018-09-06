@@ -17,10 +17,9 @@ import D
 -- in a continuized format so that one can analyze the semantic contribution of
 -- indefinites. We define from 'K' an instance of the 'PMonad' class of Orchard
 -- Petricek, and Mycroft. Although 'K' constitutes a parameterized monad in the
--- implementation, it gives rise to a graded monad (in real life), given the
--- monoidal structure of the parameters. The result is thus a faithful
--- implementation of the framework for presupposition of chapter 3 of Grove
--- 2019.
+-- implementation, these gives rise to graded monad (in real life), given a
+-- monoid over the parameters. The result is thus a faithful implementation of
+-- the framework for presupposition of chapter 3 of Grove 2019.
 
 -- | We define a datatype constructor 'PContT' for transforming a graded monad
 -- into its continuized variant as a parameterized monad.
