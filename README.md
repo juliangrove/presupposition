@@ -41,7 +41,7 @@ Third sentence: "The dessert was stale."
 
 Make 'the dessert' anaphoric to 'a cannoli':
 
-  `sentence3resolved = anaph ZeroW (\g -> g !! 0) sentence`
+  `sentence3resolved = anaph ZeroW (\g -> g !! 0) sentence3`
 
 Combine the first two sentences into a discourse:
 
