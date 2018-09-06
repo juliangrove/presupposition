@@ -1,4 +1,4 @@
-### Introduction
+## Introduction
 
 A collection of modules implementing various aspects of the framework for
 presupposition based on graded monads from the dissertation *Scope-taking and
@@ -23,7 +23,7 @@ module provides an implementation of chapter 3 (the second part).
 Mycroft for graded monads. `K` is made an instance of their *PMonad* class for
 parameterized monads.
 
-### Example
+## Example
 
 Load up K.hs and do:
 
