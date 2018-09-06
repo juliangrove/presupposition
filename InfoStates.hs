@@ -95,13 +95,21 @@ type family Lift a where
   Lift Entity = LiftedEntity
   Lift (a -> b) = Lift a -> Lift b
 
--- | We define a class with a single method 'lift' for lifting predicates into
--- their information state variants.
-class LiftStuff a where
-  lift :: a -> Lift a
+-- | We define a class 'LiftPred' with a single method 'lift' for lifting
+-- predicates into their information state variants.
+class LiftPred a where
+  lift :: ([Entity] -> a) -> Lift a
 
-instance LiftStuff OnePlacePred where
-  lift p = \x l -> Setof [ l | p $ x l ]
+instance LiftPred Bool where
+  lift a = \l -> Setof [ l | a l ]
 
-instance LiftStuff TwoPlacePred where
-  lift p = \x y l -> Setof [ l | p (x l) (y l) ]
+instance LiftPred Entity where
+  lift e = e
+
+instance LiftPred a => LiftPred (Entity -> a) where
+  lift r = \x -> lift (\l -> r l (x l))
+
+-- | From 'lift', we can define a function 'dyn' which lifts predicates of any
+-- arity into their dynamic correspondents.
+dyn :: LiftPred a => a -> Lift a
+dyn r = lift $ \l -> r

@@ -142,13 +142,13 @@ instance Effect P where
 
 -- | The graded monad operator 'upP' is just 'return'.
 upP :: a -> P () a
-upP = return
+upP a = return a
 
 -- | The graded monad operator 'downP' is just sequential application.
 downP :: (SeqSplit e (MonoidPlus f ()) (MonoidPlus e (MonoidPlus f ())),
           SeqSplit f () (MonoidPlus f ())) =>
          P e (a -> b) -> P f a -> P (MonoidPlus e (MonoidPlus f ())) b
-downP u v = u >>= \f -> v >>= \x -> return $ f x
+downP u = \v -> u >>= \f -> v >>= \x -> return $ f x
 
 -- | The graded monad operator 'joinP' is just join.
 joinP :: SeqSplit f g (MonoidPlus f g) => P f (P g b) -> P (MonoidPlus f g) b
@@ -160,5 +160,5 @@ True ||- a = Just a
 False ||- a = Nothing
 
 -- | Let's define a static meaning for _the_.
-theSta :: OnePlacePred -> P (Entity, ()) Entity
+theSta :: (Entity -> Bool) -> P (Entity, ()) Entity
 theSta = \p -> P $ \s -> p (head s) ||- (head s)

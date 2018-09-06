@@ -49,13 +49,13 @@ instance Functor (D e) where
 
 -- | The graded monad operator 'upD' is just 'return'.
 upD :: a -> D () a
-upD = return
+upD a = return a
 
 -- | The graded monad operator 'downD' is just sequential application.
 downD :: (SeqSplit e (MonoidPlus f ()) (MonoidPlus e (MonoidPlus f ())),
           SeqSplit f () (MonoidPlus f ())) =>
          D e (a -> b) -> D f a -> D (MonoidPlus e (MonoidPlus f ())) b
-downD u v = u >>= \f -> v >>= \x -> return $ f x
+downD u = \v -> u >>= \f -> v >>= \x -> return $ f x
 
 -- | The graded monad operator 'joinD' is just join.
 joinD :: SeqSplit e f (MonoidPlus e f) => D e (D f b) -> D (MonoidPlus e f) b
@@ -71,7 +71,7 @@ anaph :: NatWitness n
 anaph i a m = D $ \j c -> preAnaph i a $ runD m j c
 
 -- | Let's define a dynamic meaning for _the_.
-the :: Lift OnePlacePred -> D (Lift Entity, ()) (Lift Entity)
+the :: Lift (Entity -> Bool) -> D (Lift Entity, ()) (Lift Entity)
 the = \p -> D $ \i c -> P $ \s -> isTrue (c $ p $ head s) ||- (head s, i)
 
 -- | We define a function '>@' for dynamic discourse update.

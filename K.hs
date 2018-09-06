@@ -39,7 +39,8 @@ instance Effect m => PMonad (PContT m r) where
 
 -- | We define a makeshift parameterized bind to avoid naming conflicts outside
 -- the current module.
-(>>=>) :: Effect m => PContT m r f e a -> (a -> PContT m r e g b) -> PContT m r f g b
+(>>=>) :: Effect m =>
+          PContT m r f e a -> (a -> PContT m r e g b) -> PContT m r f g b
 m >>=> f = PContT $ \k -> runPContT m $ \x -> runPContT (f x) k
 
 -- | The parameterized monad operator 'upK' is just 'return'.
@@ -48,7 +49,7 @@ upK a = PContT $ \k -> k a
 
 -- | The parameterized monad operator 'downK' is just sequential application.
 downK :: K f e (a -> b) -> K e g a -> K f g b
-downK u v = u >>=> \f -> v >>=> \x -> upK $ f x
+downK u = \v -> u >>=> \f -> v >>=> \x -> upK $ f x
 
 -- | The parameterized monad operator 'joinK' is just join.
 joinK :: K f e (K e g b) -> K f g b
@@ -76,8 +77,14 @@ newRegister l = Setof [ l ++ [x] | x <- entities ]
 -- article.
 a :: (SeqSplit () (MonoidPlus e ()) (MonoidPlus e ()),
       SeqSplit e () (MonoidPlus e ())) =>
-     Lift OnePlacePred -> K (MonoidPlus e ()) e (Lift Entity)
+     Lift (Entity -> Bool) -> K (MonoidPlus e ()) e (Lift Entity)
 a p = PContT $ \k ->
         D $ \i ->
           runD (upD (newRegister >+ (p $ \l -> l !! i)) >@
           (k $ \l -> l !! i)) (succ i)
+
+-- | Let's have an allomorph of 'a' for when it is phonologically necessary.
+an :: (SeqSplit () (MonoidPlus e ()) (MonoidPlus e ()),
+       SeqSplit e () (MonoidPlus e ())) =>
+      Lift (Entity -> Bool) -> K (MonoidPlus e ()) e (Lift Entity)
+an = a
