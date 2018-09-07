@@ -29,52 +29,36 @@ Load up K.hs and do:
 
 First sentence: "An octopus ate a cannoli."
 
-  `
-  sentence1 = monadicLower $ (an // dyn octopus) \\ (downK ((downK (upK (dyn ate))) // (a // dyn cannoli)))
-  `
+  `sentence1 = monadicLower $ (an // dyn octopus) \\ (downK ((downK (upK (dyn ate))) // (a // dyn cannoli)))`
 
 Second sentence: "The mollusk was thirsty."
 
-  `
-  sentence2 = (the // dyn mollusk) \\ (downD (upD (dyn (was thirsty))))
-  `
+  `sentence2 = (the // dyn mollusk) \\ (downD (upD (dyn (was thirsty))))`
 
 Make 'the mollusk' anaphoric to 'an octopus':
 
-  `
-  sentence2resolved = anaph ZeroW (\g -> g !! 1) sentence2
-  `
+  `sentence2resolved = anaph ZeroW (\g -> g !! 1) sentence2`
 
 Third sentence: "The dessert was stale."
 
-  `
-  sentence3 = (the // dyn dessert) \\ (downD (upD ((dyn (was stale)))))
-  `
+  `sentence3 = (the // dyn dessert) \\ (downD (upD ((dyn (was stale)))))`
 
 Make 'the dessert' anaphoric to 'a cannoli':
 
-  `
-  sentence3resolved = anaph ZeroW (\g -> g !! 0) sentence3
-  `
+  `sentence3resolved = anaph ZeroW (\g -> g !! 0) sentence3`
 
 Combine the first two sentences into a discourse:
 
-  `
-  discourse1 = sentence1 >@ sentence2resolved
-  `
+  `discourse1 = sentence1 >@ sentence2resolved`
 
 Combine the discourse and the third sentence into a new discourse:
 
-  `
-  discourse2 = discourse1 >@ sentence3resolved
-  `
+  `discourse2 = discourse1 >@ sentence3resolved`
 
 Now, check each piece for truth, falsity, or failure:
 
-  `
-  checkForTruth sentence1
+  `checkForTruth sentence1`
 
-  checkForTruth discourse1
+  `checkForTruth discourse1`
 
-  checkForTruth discourse2
-  `
+  `checkForTruth discourse2`
