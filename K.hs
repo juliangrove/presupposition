@@ -83,7 +83,7 @@ a p = PContT $ \k ->
           runD (upD (newRegister >+ (p $ \l -> l !! i)) >@
           (k $ \l -> l !! i)) (succ i)
 
--- | Let's have an allomorph of 'a' for when it is phonologically necessary.
+-- | Let's have an allomorph of 'a' for when it is phonotactically necessary.
 an :: (SeqSplit () (MonoidPlus e ()) (MonoidPlus e ()),
        SeqSplit e () (MonoidPlus e ())) =>
       Lift (Entity -> Bool) -> K (MonoidPlus e ()) e (Lift Entity)
