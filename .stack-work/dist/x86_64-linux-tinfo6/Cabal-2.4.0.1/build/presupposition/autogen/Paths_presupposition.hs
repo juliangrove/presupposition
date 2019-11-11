@@ -29,12 +29,12 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "/home/juliangrove/Documents/Haskell/presupposition/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/bin"
-libdir     = "/home/juliangrove/Documents/Haskell/presupposition/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/lib/x86_64-linux-ghc-8.6.5/presupposition-0.1.0.0-FwrJ1qPbZum2Ssl3x4fV3C-presupposition"
-dynlibdir  = "/home/juliangrove/Documents/Haskell/presupposition/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/lib/x86_64-linux-ghc-8.6.5"
-datadir    = "/home/juliangrove/Documents/Haskell/presupposition/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/share/x86_64-linux-ghc-8.6.5/presupposition-0.1.0.0"
-libexecdir = "/home/juliangrove/Documents/Haskell/presupposition/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/libexec/x86_64-linux-ghc-8.6.5/presupposition-0.1.0.0"
-sysconfdir = "/home/juliangrove/Documents/Haskell/presupposition/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/etc"
+bindir     = "/home/juliangrove/Documents/Haskell/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/bin"
+libdir     = "/home/juliangrove/Documents/Haskell/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/lib/x86_64-linux-ghc-8.6.5/presupposition-0.1.0.0-FwrJ1qPbZum2Ssl3x4fV3C-presupposition"
+dynlibdir  = "/home/juliangrove/Documents/Haskell/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/lib/x86_64-linux-ghc-8.6.5"
+datadir    = "/home/juliangrove/Documents/Haskell/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/share/x86_64-linux-ghc-8.6.5/presupposition-0.1.0.0"
+libexecdir = "/home/juliangrove/Documents/Haskell/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/libexec/x86_64-linux-ghc-8.6.5/presupposition-0.1.0.0"
+sysconfdir = "/home/juliangrove/Documents/Haskell/presupposition/.stack-work/install/x86_64-linux-tinfo6/021d25a811b3d15d5484c96364aa964b0bc6d48c349904b8860146d2ce55c2be/8.6.5/etc"
 
 getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "presupposition_bindir") (\_ -> return bindir)

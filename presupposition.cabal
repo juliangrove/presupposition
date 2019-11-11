@@ -20,4 +20,4 @@ executable presupposition
   build-depends:       base >= 4.7 && < 5
                      , effect-monad
                      , type-level-sets
-  other-modules:       P, D, K, InfoStates, Model
+  other-modules:       P, D, K, Q, InfoStates, Model
