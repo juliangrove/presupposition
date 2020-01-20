@@ -1,4 +1,4 @@
--- | This is what the world is like.
+-- | Entities, properties, binary and ternary relations.
 
 module Model where
 
