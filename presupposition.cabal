@@ -19,7 +19,7 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md, README.md
 
 library
-  exposed-modules:     Q, Model, K, InfoStates, P, D
+  exposed-modules:     Model, InfoStates, P, D, K, Q
   -- other-modules:
   -- other-extensions:
   build-depends:       base
