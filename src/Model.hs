@@ -1,13 +1,4 @@
 -- | This is what the world is like.
-{-# LANGUAGE
-    FlexibleInstances,
-    FlexibleContexts,
-    TypeOperators,
-    MultiParamTypeClasses,
-    KindSignatures,
-    UndecidableInstances,
-    UndecidableSuperClasses,
-    DataKinds #-}
 
 module Model where
 
