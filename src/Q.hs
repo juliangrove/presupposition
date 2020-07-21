@@ -29,9 +29,6 @@ import K
 -- 'Q'. We define from 'Q' an instance of the /PMonad/ class of Petricek,
 -- Orchard, and Mycroft.
 
-main :: IO ()
-main = pure ()
-
 -- | A datatype constructor 'Q' that transforms 'K' monad into its continuized
 -- variant as another parameterized monad. The extra parameter h is the
 -- incoming parameter of the continuation, which remains the incoming parameter
