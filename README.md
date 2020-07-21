@@ -2,7 +2,7 @@
 
 A collection of modules implementing various aspects of the framework for
 presupposition based on graded monads from the dissertation [Scope-taking and
-presupposition satisfaction](https://semanticsarchive.net/Archive/TRmOTkzM/grove-scope-presupposition-dissertation.pdf);
+presupposition satisfaction](https://semanticsarchive.net/Archive/TRmOTkzM);
 in particular, chapters 2 and 3. These are:
 
 P.hs: implements a static framework for presupposition, in which all
@@ -25,7 +25,7 @@ cancellation, functionality to analyze the semantic contribution of indefinites,
 and functionality to analyze the semantic contribution of other quantifiers that
 lack exceptionally scoping behavior (e.g., *every*). Terms with presuppositions
 now inhabit types `Q h e f a`. The overall strategy is borrowed from
-[Charlow 2014](https://semanticsarchive.net/Archive/2JmMWRjY/charlow-semantics-exceptional-scope-diss.pdf),
+[Charlow 2014](https://semanticsarchive.net/Archive/2JmMWRjY),
 which introduces the notion of an "underlying monad" of a continuation monad to
 differentiate between the two kinds of quantifiers.
 
